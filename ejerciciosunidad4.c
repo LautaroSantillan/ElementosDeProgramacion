@@ -180,7 +180,7 @@ int main ()
 /*#include <stdio.h>
 int main()
 {
-    int valorH=0, horasTr=0, sueldo=0;
+    int valorH, horasTr, sueldo;
     printf("Ingrese el valor de la hora trabajada: ");
     scanf("%d", &valorH);
     printf("\nIngrese las horas trabajadas: ");
@@ -192,8 +192,8 @@ int main()
         if(horasTr>150)
             sueldo+=1000;
     }
-    printf("\nSu sueldo mas premios es de %d", sueldo);
-}ERROR QUE SUMA +1*/
+    printf("\nSu sueldo mas premios es de %d\n", sueldo);
+}*/
 
 /*ejercicio 4.13*/
 
@@ -202,15 +202,14 @@ int main()
 {
     int numcat;
     printf("Ingrese el numero del catalogo: ");
-    scanf("%d", numcat);
-    if(1200<=numcat && numcat<=90000)
+    scanf("%d", &numcat);
+    if(numcat>=1200 && numcat<=90000)
     {
         if(12121<=numcat && numcat<=18081 || 30012<=numcat && numcat<=45565 || 67000<=numcat && numcat<=68000)
-            printf("\nEl articulo es defectuoso");
+            printf("\nEl articulo es defectuoso\n");
         else
-            printf("\nEl articulo no es defectuoso");
+            printf("\nEl articulo no es defectuoso\n");
     }
     else
-        printf("\nFUERA DE CATALOGO");
-}NO FUNCIONA*/
-
+        printf("\nFUERA DE CATALOGO\n");
+}*/
