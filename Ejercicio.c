@@ -58,7 +58,7 @@ int main()
     if(cant>0)
     {
         Ordenar(VAlum, cant);
-        printf("\nDNI\tApell-Nombr\tDomi\tSexo\tDia Nac\tMes Nac\tAnio Nac\tMat Aprob\tProm");
+        printf("\nDNI\tApell-Nombr\tDomi\tSexo\tDia\tMes\tAnio\tMat Aprob\tProm");
         MostrarStr(VAlum, cant);
         //Punto B)
         MostrarMayorA(VAlum, cant, 1992);
@@ -69,7 +69,8 @@ int main()
         ContarYMostrarIgualesA(VAlum, 'F', 'M', 'X', cant);
     }
     else
-        printf("\nNo se ingresaron alumnos\n");
+        printf("\nNo se ingresaron alumnos");
+    printf("\n\n");
     return 0;
 }
 //FUNCIONES///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -146,7 +147,7 @@ void MostrarStr(TAlumno V[], int ce)
 {
     int i;
      for(i=0;i<ce;i++)
-        printf("\n%d\t%s\t%s\t%c\t%d\t%d\t%d %d\t%.2f", V[i].DNI, V[i].ApeyNom, V[i].Domi, V[i].sex, V[i].FNac, V[i].MatAprob, V[i].prom);
+        printf("\n%d\t%s\t%s\t%c\t%d\t%d\t%d\t%d\t%.2f", V[i].DNI, V[i].ApeyNom, V[i].Domi, V[i].sex, V[i].FNac, V[i].MatAprob, V[i].prom);
 }
 //VALIDACIÓN DE DATOS///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 int IngrDatoVal(int lim1, int lim2)
@@ -172,18 +173,15 @@ int esDatoValCh(char x, char car1, char car2, char car3)
         return 0;
 }
 //VALIDACION FECHA//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-int esBisiesto(int);
-int CantDiaMes(int, int);
-int esFechaValida(int, int, int);
 TFecha IngrFechaVal()
 {
     TFecha fecha;
     do{
-        printf("Ingrese Numero del Dia de una fecha: ");
+        printf("\nIngrese Dia: ");
         scanf("%d", &fecha.dia);
-        printf("Ingrese Numero del Mes de una fecha: ");
+        printf("Ingrese Mes: ");
         scanf("%d", &fecha.mes);
-        printf("Ingrese Numero del Anio de una fecha: ");
+        printf("Ingrese Anio: ");
         scanf("%d", &fecha.anio);
     }while(esFechaValida(fecha.dia, fecha.mes, fecha.anio)==0);
     return fecha;
