@@ -1,22 +1,22 @@
 /*10.21.Un banco tiene el archivo secuencia SALDOS, con los saldos de sus casos 20.000 clientes de caja de ahorro,
 al inicio del mes. Cada registro tiene los siguientes datos:
-• Número de caja de ahorro (entero, de 6 cifras)
-• Apellido y nombre (alfanuméricos de 30 caracteres)
-• Saldo (real, mayor o igual a cero)
-Existe, además, un segundo archivo secuencial con los movimientos del mes, MOVI, ordenado por sucursal
+â€¢ NÃºmero de caja de ahorro (entero, de 6 cifras)
+â€¢ Apellido y nombre (alfanumÃ©ricos de 30 caracteres)
+â€¢ Saldo (real, mayor o igual a cero)
+Existe, ademÃ¡s, un segundo archivo secuencial con los movimientos del mes, MOVI, ordenado por sucursal
 del banco, Cada registro contiene:
-• Sucursal del banco (entero de 4 cifras no correlativos)
-• Número de cuenta de ahorro
-• Mes (entero)
-• Día (entero)
-• Código de Operación (entero 1: depósito (suma al saldo); 2: extracción (resta al saldo))
-• Importe (real, mayor que cero)
-En el caso de las extracciones, antes de proceder a realizar la resta del importe al saldo, evaluar si éste es
+â€¢ Sucursal del banco (entero de 4 cifras no correlativos)
+â€¢ NÃºmero de cuenta de ahorro
+â€¢ Mes (entero)
+â€¢ DÃ­a (entero)
+â€¢ CÃ³digo de OperaciÃ³n (entero 1: depÃ³sito (suma al saldo); 2: extracciÃ³n (resta al saldo))
+â€¢ Importe (real, mayor que cero)
+En el caso de las extracciones, antes de proceder a realizar la resta del importe al saldo, evaluar si Ã©ste es
 mayor al importe (no puede quedar saldo negativo en la Caja de Ahorro). En este caso, guardar en el archivo
 SIN_SALDO los datos que vienen en el archivo MOVI.
 Confeccionar un programa para que:
 a. Se actualice el archivo SALDOS con los movimientos registrados.
-b. Imprima un listado con las cuentas que en el mes han realizado más de 5 extracciones.*/
+b. Imprima un listado con las cuentas que en el mes han realizado mÃ¡s de 5 extracciones.*/
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -51,10 +51,11 @@ int main()
     GrabarArch(VSal, cant);
     printf("\nLas cuentas que en el mes realizaron mas de 5 extracciones son: ");
     MostrarMayorQue(VSal, VExt, cant, 5);
+    printf("\n\n\n");
 
     return 0;
 }
-//DECLARACIÓN FUNCIONES//////////////////////////////////////////////////////////////////////////////////////////////
+//DECLARACIÃ“N FUNCIONES//////////////////////////////////////////////////////////////////////////////////////////////
 int CargarArch(T_Sdo V[], int ce)
 {
     FILE *pf;
@@ -76,19 +77,19 @@ int CargarArch(T_Sdo V[], int ce)
     fclose(pf);
     return i;
 }
-void ProcesarArch(T_Sdo V[], E[], int ce)
+void ProcesarArch(T_Sdo V[], int Extr[], int ce)
 {
     FILE *pf, *ss;
     T_Mov aux;
     int pos;
     pf=fopen("MOVI", "rb");
-    if(pf=NULL)
+    if(pf==NULL)
     {
         printf("\nNo abrio el archivo...");
         exit(1);
     }
     ss=fopen("SIN_SALDO", "wb");
-    if(ss=NULL)
+    if(ss==NULL)
     {
         printf("\nNo abrio el archivo...");
         exit(1);
@@ -96,7 +97,7 @@ void ProcesarArch(T_Sdo V[], E[], int ce)
     fread(&aux, sizeof(T_Mov), 1, pf);
     while(!feof(pf))
     {
-        pos=Busqueda(V, ce, aux.cah);
+        pos=Busqueda(V, ce, aux.nca);
         if(pos!=-1)
         {
             if(aux.cop==1)
@@ -106,7 +107,7 @@ void ProcesarArch(T_Sdo V[], E[], int ce)
                 if(V[pos].sdo>=aux.imp)
                 {
                     V[pos].sdo-=aux.imp;
-                    E[pos]++;
+                    Extr[pos]++;
                 }
                 else
                     fwrite(&aux, sizeof(T_Mov), 1, ss);
