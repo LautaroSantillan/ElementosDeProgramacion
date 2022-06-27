@@ -1,61 +1,79 @@
-/*Se dispone de un archivo llamado RATING.dat que guarda la información de los puntos obtenidos de rating
-en los distintos programas de canales de cable a lo largo del día.
-Cada registro contiene:
- •  Número de canal (entero)
- •  Programa (texto de 35 caracteres máximo)
- •  Rating (float)
+/*Se dispone de un archivo llamado RATING.dat que guarda la informaciï¿½n de los puntos obtenidos de rating en los distintos programas de canales de cable a lo largo del dï¿½a. Cada registro contiene:
+
+ ï¿½  Nï¿½mero de canal (entero)
+ ï¿½  Programa (texto de 35 caracteres mï¿½ximo)
+ ï¿½  Rating (float)
+
 El archivo se encuentra ordenado por canal. Se solicita informar:
+
  a.  Aquellos canales que obtengan menos de 15 puntos en total.
- b.  El canal más visto.
+ b.  El canal mï¿½s visto.
  c.  Generar un archivo con el promedio de rating de cada canal que incluya dos campos:
- •  Número de canal
- •  Promedio*/
- //INCLUDE/////////////////////////////////////////////////////////////////////////////////////////////////
-#include <stdio.h>
-#include <string.h>
-//ESTRUCTURAS//////////////////////////////////////////////////////////////////////////////////////////////
-typedef struct {
-                int numCanal; //Ordenado para Corte de Control
-                char programa[36];
+
+ ï¿½  Nï¿½mero de canal
+ ï¿½  Promedio*/
+ /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ #include <stdio.h>
+ #include <strings.h>
+ typedef struct{int numcanal;
+                char prog[36];
                 float rating;
-                }T_Prog;
+                }T_Puntostv;
+ typedef struct {int Numcan;
+                 float prom;}T_Archrating;
+void corte ();
+void main()
+ {
+    corte();
 
-typedef struct {
-                int nroCanal;
-                float prom;
-                }T_Rat;
-//PROTOTIPADO DE FUNCIONES////////////////////////////////////////////////////////////////////////////////
-int CargaArch(T_Prog[]);
-void GrabarArch(T_Rat[], int);
-//MAIN////////////////////////////////////////////////////////////////////////////////////////////////////
-int main()
+ }
+void corte ()
 {
-    T_Prog VProg[];
-    T_Rat VRat[];
-    int cantCanales=0, acumPunto=0;
+    int i=0,puntosob,band=0,cPrograma;
 
-    cantCanales=CargaArch(VProg);
-
-}
-//FUNCIONES///////////////////////////////////////////////////////////////////////////////////////////////
-int CargaArch(T_Prog V[])
-{
     FILE *pf;
-    T_Prog aux;
-    int i=0;
-    pf=fopen("RATING.dat", "rb");
+
+    T_Puntostv aux;
+    T_Archrating aux2;
+    int canalant,visto,canal,masvisto;
+    pf=fopen("RATING.dat","rb");
     if(pf==NULL)
     {
-        printf("\nNo abrio el archivo...");
+        printf("\n No se pudo abrir el archivo...");
         exit(1);
     }
-    fread(&aux, sizeof(T_Prog), 1, pf);
-    while(!feof (pf))
+    FILE *pEscribir = fopen("promedio.dat","wb");
+    if(pEscribir==NULL)
     {
-        V[i]=aux;
-        i++;
-        fread(&aux, sizeof(T_Prog), 1, pf);
+        printf("\n No se pudo abrir el archivo...");
+        exit(1);
     }
-    fclose(pf);
-    return i;
+    fread(&aux,sizeof(T_Puntostv),1,pf);
+    while(!feof(pf))
+    {
+        canalant=aux.numcanal;
+        puntosob=0;
+        cPrograma=0;
+        while(canalant==aux.numcanal && !feof(pf))
+        {
+            puntosob+=aux.rating;
+            cPrograma++;
+            fread(&aux,sizeof(T_Puntostv),1,pf);
+        }
+
+        if(puntosob<15)
+        {
+            printf("\n\nEl canal %d no alcanzo los 15 puntos de rating\n",canalant);
+        }
+        if(band==0||puntosob>masvisto)
+        {
+            band=1;
+            masvisto=puntosob;
+            canal=canalant;
+        }
+        aux2.prom=(float)puntosob/cPrograma;
+        aux2.Numcan=canalant;
+        fwrite(&aux2,sizeof(T_Archrating),1,pEscribir);
+    }
+    printf("\n\nEl canal mas visto es %d",canal);
 }
